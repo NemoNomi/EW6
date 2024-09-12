@@ -3,34 +3,32 @@ using UnityEngine.UI;
 
 public class ExpandableMenu : MonoBehaviour
 {
-    public RectTransform menuPanel;  // Das Panel, das die Buttons enthält
-    public Button toggleButton;      // Der Button (Lasche), um das Menü ein- und auszuklappen
-    public float slideSpeed = 300f;  // Die Geschwindigkeit, mit der das Menü nach oben/unten fährt
+    public RectTransform menuPanel;
+    public Button toggleButton;
+    public float slideSpeed = 300f;
 
-    private bool isMenuOpen = false; // Status des Menüs
-    private Vector2 closedPosition;  // Position des Panels, wenn es geschlossen ist
-    private Vector2 openPosition;    // Position des Panels, wenn es geöffnet ist
+    private bool isMenuOpen = false;
+    private Vector2 closedPosition; 
+    private Vector2 openPosition; 
 
     void Start()
     {
-        // Initiale Positionen speichern
         closedPosition = menuPanel.anchoredPosition;
         openPosition = new Vector2(closedPosition.x, closedPosition.y + menuPanel.rect.height);
 
-        // Listener für den Button hinzufügen
         toggleButton.onClick.AddListener(ToggleMenu);
     }
 
     void ToggleMenu()
     {
-        StopAllCoroutines();  // Stoppe andere Bewegungen des Panels
+        StopAllCoroutines();
         if (isMenuOpen)
         {
-            StartCoroutine(SlideMenu(closedPosition));  // Menü nach unten fahren
+            StartCoroutine(SlideMenu(closedPosition));
         }
         else
         {
-            StartCoroutine(SlideMenu(openPosition));  // Menü nach oben fahren
+            StartCoroutine(SlideMenu(openPosition));
         }
         isMenuOpen = !isMenuOpen;
     }
@@ -42,6 +40,6 @@ public class ExpandableMenu : MonoBehaviour
             menuPanel.anchoredPosition = Vector2.Lerp(menuPanel.anchoredPosition, targetPosition, Time.deltaTime * slideSpeed);
             yield return null;
         }
-        menuPanel.anchoredPosition = targetPosition;  // Endposition setzen
+        menuPanel.anchoredPosition = targetPosition;
     }
 }
