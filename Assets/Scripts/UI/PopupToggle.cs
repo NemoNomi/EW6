@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class PopupToggle : MonoBehaviour
 {
-    public GameObject prefab;
-    public Canvas toggleButtonCanvas;  
-    public List<Button> toggleButtons = new List<Button>(); 
-    public List<GameObject> infoPopupCanvases = new List<GameObject>(); 
+    public string modelTag = "modelObject";  
+    public Canvas toggleButtonCanvas;        
+    public List<Button> toggleButtons = new List<Button>();  
+    public List<GameObject> infoPopupCanvases = new List<GameObject>();  
 
-    private GameObject spawnedPrefab; 
-    private bool prefabIsInstantiated = false; 
+    private GameObject modelObject;  
+    private bool prefabIsInstantiated = false;  
 
     void Start()
     {
@@ -24,42 +24,38 @@ public class PopupToggle : MonoBehaviour
 
         for (int i = 0; i < toggleButtons.Count; i++)
         {
-            int index = i; 
+            int index = i;
             toggleButtons[i].onClick.AddListener(() => TogglePopup(index));
-
             infoPopupCanvases[i].SetActive(false);
         }
     }
 
     void Update()
     {
-        if (IsPrefabActive() && !prefabIsInstantiated)
+        modelObject = GameObject.FindWithTag(modelTag);
+
+        if (modelObject != null && !prefabIsInstantiated)
         {
             toggleButtonCanvas.gameObject.SetActive(true);
-            prefabIsInstantiated = true; 
+            prefabIsInstantiated = true;
         }
-        else if (!IsPrefabActive() && prefabIsInstantiated)
+        else if (modelObject == null && prefabIsInstantiated)
         {
             toggleButtonCanvas.gameObject.SetActive(false);
-            prefabIsInstantiated = false; 
+            prefabIsInstantiated = false;
         }
     }
 
     void TogglePopup(int index)
     {
-        if (prefabIsInstantiated)
+        if (prefabIsInstantiated && modelObject != null)
         {
             bool isActive = infoPopupCanvases[index].activeSelf;
             infoPopupCanvases[index].SetActive(!isActive);
         }
         else
         {
-            Debug.LogWarning("Das Prefab ist noch nicht in der Szene aktiv.");
+            Debug.LogWarning("Das Modell ist noch nicht in der Szene aktiv oder wurde entfernt.");
         }
-    }
-
-    bool IsPrefabActive()
-    {
-        return prefab != null && prefab.activeInHierarchy;
     }
 }

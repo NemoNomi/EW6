@@ -3,8 +3,9 @@ using UnityEngine;
 public class IntroToggle : MonoBehaviour
 {
     public Canvas infoCanvas;
-    public GameObject prefab;
+    public string modelTag = "modelObject";
 
+    private GameObject modelObject;
     private bool prefabIsActive = false;
 
     void Start()
@@ -14,6 +15,8 @@ public class IntroToggle : MonoBehaviour
 
     void Update()
     {
+        modelObject = GameObject.FindWithTag(modelTag);
+
         if (IsPrefabActive() && !prefabIsActive)
         {
             infoCanvas.gameObject.SetActive(false);
@@ -22,12 +25,12 @@ public class IntroToggle : MonoBehaviour
         else if (!IsPrefabActive() && prefabIsActive)
         {
             infoCanvas.gameObject.SetActive(true);
-            prefabIsActive = false;  
+            prefabIsActive = false;
         }
     }
 
     bool IsPrefabActive()
     {
-        return prefab != null && prefab.activeInHierarchy;
+        return modelObject != null && modelObject.activeInHierarchy;
     }
 }
