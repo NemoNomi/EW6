@@ -294,9 +294,6 @@ MonoBehaviour:
   toggleButtons:
   - {fileID: 648177288}
   - {fileID: 1759256444}
-  infoPopupCanvases:
-  - {fileID: 1089264633}
-  - {fileID: 687200027}
 --- !u!1 &138336788
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,12 +1201,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663687731}
   m_CullTransparentMesh: 1
---- !u!1 &687200027 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4282827954834574379, guid: 9fedecbd1aa68924b816f15cb97e611a,
-    type: 3}
-  m_PrefabInstance: {fileID: 208546340}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &715736757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,12 +1751,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075382227}
   m_CullTransparentMesh: 1
---- !u!1 &1089264633 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8762888045581560277, guid: 9fedecbd1aa68924b816f15cb97e611a,
-    type: 3}
-  m_PrefabInstance: {fileID: 208546340}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1125729850
 GameObject:
   m_ObjectHideFlags: 0

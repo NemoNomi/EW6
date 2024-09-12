@@ -7,7 +7,7 @@ public class PopupToggle : MonoBehaviour
     public string modelTag = "modelObject";  
     public Canvas toggleButtonCanvas;        
     public List<Button> toggleButtons = new List<Button>();  
-    public List<GameObject> infoPopupCanvases = new List<GameObject>();  
+    private List<GameObject> infoPopupCanvases = new List<GameObject>();  
 
     private GameObject modelObject;  
     private bool prefabIsInstantiated = false;  
@@ -16,9 +16,9 @@ public class PopupToggle : MonoBehaviour
     {
         toggleButtonCanvas.gameObject.SetActive(false);
 
-        if (toggleButtons.Count != infoPopupCanvases.Count)
+        if (toggleButtons.Count == 0)
         {
-            Debug.LogError("Die Anzahl der Buttons und Canvases muss gleich sein.");
+            Debug.LogError("Es müssen Toggler-Buttons zugewiesen werden.");
             return;
         }
 
@@ -26,7 +26,6 @@ public class PopupToggle : MonoBehaviour
         {
             int index = i;
             toggleButtons[i].onClick.AddListener(() => TogglePopup(index));
-            infoPopupCanvases[i].SetActive(false);
         }
     }
 
@@ -36,26 +35,52 @@ public class PopupToggle : MonoBehaviour
 
         if (modelObject != null && !prefabIsInstantiated)
         {
-            toggleButtonCanvas.gameObject.SetActive(true);
-            prefabIsInstantiated = true;
+            FindCanvasesInModelObject();
+
+            if (infoPopupCanvases.Count > 0)
+            {
+                Debug.Log("Model instanziert und Canvases gefunden.");
+                toggleButtonCanvas.gameObject.SetActive(true);
+                prefabIsInstantiated = true;
+            }
         }
         else if (modelObject == null && prefabIsInstantiated)
         {
+            Debug.Log("Model entfernt oder nicht vorhanden.");
             toggleButtonCanvas.gameObject.SetActive(false);
             prefabIsInstantiated = false;
         }
     }
 
+    void FindCanvasesInModelObject()
+    {
+        infoPopupCanvases.Clear();
+
+        Canvas[] prefabCanvases = modelObject.GetComponentsInChildren<Canvas>(true);
+
+        foreach (Canvas canvas in prefabCanvases)
+        {
+            infoPopupCanvases.Add(canvas.gameObject);
+            canvas.gameObject.SetActive(false);
+        }
+
+        if (infoPopupCanvases.Count < toggleButtons.Count)
+        {
+            Debug.LogWarning("Weniger Canvases gefunden als Toggler-Buttons vorhanden sind.");
+        }
+    }
+
     void TogglePopup(int index)
     {
-        if (prefabIsInstantiated && modelObject != null)
+        if (prefabIsInstantiated && modelObject != null && index < infoPopupCanvases.Count)
         {
             bool isActive = infoPopupCanvases[index].activeSelf;
             infoPopupCanvases[index].SetActive(!isActive);
+            Debug.Log($"Canvas {infoPopupCanvases[index].name} wurde {(isActive ? "deaktiviert" : "aktiviert")}.");
         }
         else
         {
-            Debug.LogWarning("Das Modell ist noch nicht in der Szene aktiv oder wurde entfernt.");
+            Debug.LogWarning("Das Modell ist noch nicht in der Szene aktiv oder keine Canvas gefunden.");
         }
     }
 }
