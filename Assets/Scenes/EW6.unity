@@ -869,7 +869,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 455680756}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &267629218
 MonoBehaviour:
@@ -884,7 +884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabTag: modelObject
-  introAudioSource: {fileID: 1223101499}
 --- !u!1 &303532866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,9 +1284,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 842540314}
-  - {fileID: 1295990138}
   - {fileID: 267629217}
+  - {fileID: 1295990138}
+  - {fileID: 842540314}
   m_Father: {fileID: 842336252}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2157,13 +2156,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842540313}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 455680756}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &842540315
 MonoBehaviour:
@@ -2324,7 +2323,6 @@ MonoBehaviour:
   actionButton: {fileID: 303532868}
   actionAudioSource: {fileID: 1551079218}
   actionSound: {fileID: 8300000, guid: a7ce0f80c1e794740a3ced8619e065d0, type: 3}
-  animationAudioSource: {fileID: 1551079218}
   soundDelay: 0.7
   clickCooldown: 1.7
 --- !u!1 &1029731923
@@ -2779,12 +2777,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1223101499 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1089805829059962094, guid: 9fedecbd1aa68924b816f15cb97e611a,
-    type: 3}
-  m_PrefabInstance: {fileID: 208546340}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1295990137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2829,8 +2821,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90b2fc2bedad4d4e95923301e02f9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabTag: modelObject
   playSoundButton: {fileID: 568113151}
-  audioSource: {fileID: 1590717133}
 --- !u!1 &1435516220
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,12 +2961,6 @@ CanvasRenderer:
 --- !u!82 &1551079218 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 3146495952783166707, guid: 9fedecbd1aa68924b816f15cb97e611a,
-    type: 3}
-  m_PrefabInstance: {fileID: 208546340}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &1590717133 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8782493672801142230, guid: 9fedecbd1aa68924b816f15cb97e611a,
     type: 3}
   m_PrefabInstance: {fileID: 208546340}
   m_PrefabAsset: {fileID: 0}

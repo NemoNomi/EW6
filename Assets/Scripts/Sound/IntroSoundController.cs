@@ -1,27 +1,44 @@
 using UnityEngine;
+using System.Collections;
 
 public class IntroSoundController : MonoBehaviour
 {
     public string prefabTag = "modelObject"; 
-    public AudioSource introAudioSource;      
-
-    private GameObject spawnedPrefab;       
+    private AudioSource introAudioSource;
     private bool hasPlayedSound = false;    
 
-    void Update()
+    void Start()
     {
-        if (!hasPlayedSound)
+        StartCoroutine(CheckForInstantiatedPrefab());
+    }
+
+    IEnumerator CheckForInstantiatedPrefab()
+    {
+        while (!hasPlayedSound)
         {
-            spawnedPrefab = GameObject.FindWithTag(prefabTag);
+            GameObject spawnedPrefab = GameObject.FindWithTag(prefabTag);
 
             if (spawnedPrefab != null)
             {
-                if (introAudioSource != null)
+                AudioSource[] audioSources = spawnedPrefab.GetComponentsInChildren<AudioSource>();
+
+                if (audioSources.Length > 0)
                 {
-                    introAudioSource.Play();
-                    hasPlayedSound = true;
+                    introAudioSource = audioSources[0];
+
+                    if (introAudioSource != null)
+                    {
+                        introAudioSource.Play();
+                        hasPlayedSound = true;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Keine AudioSource im instanzierten Prefab gefunden.");
                 }
             }
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

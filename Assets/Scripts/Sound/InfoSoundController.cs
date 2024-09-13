@@ -1,16 +1,43 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class InfoSoundController : MonoBehaviour
 {
-    public Button playSoundButton; 
-    public AudioSource audioSource;
+    public string prefabTag = "modelObject";
+    public Button playSoundButton;
+    private AudioSource audioSource;
+    private bool isPrefabInstantiated = false;
 
     void Start()
     {
-        if (playSoundButton != null)
+        StartCoroutine(CheckForInstantiatedPrefab());
+    }
+
+    IEnumerator CheckForInstantiatedPrefab()
+    {
+        while (!isPrefabInstantiated)
         {
-            playSoundButton.onClick.AddListener(PlaySpatialAudio);
+            GameObject spawnedPrefab = GameObject.FindWithTag(prefabTag);
+
+            if (spawnedPrefab != null && playSoundButton != null)
+            {
+                AudioSource[] audioSources = spawnedPrefab.GetComponentsInChildren<AudioSource>();
+
+                if (audioSources.Length >= 2)
+                {
+                    audioSource = audioSources[1];
+
+                    playSoundButton.onClick.AddListener(PlaySpatialAudio);
+                    isPrefabInstantiated = true;
+                }
+                else
+                {
+                    Debug.LogWarning("Weniger als 2 AudioSources im instanzierten Prefab gefunden.");
+                }
+            }
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
 

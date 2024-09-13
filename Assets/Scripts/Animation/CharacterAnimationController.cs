@@ -8,7 +8,7 @@ public class CharacterAnimationController : MonoBehaviour
     public Button actionButton;
     public AudioSource actionAudioSource;
     public AudioClip actionSound;
-    public AudioSource animationAudioSource;
+    private AudioSource animationAudioSource;
     public float soundDelay = 0.5f;
     public float clickCooldown = 1f;
 
@@ -16,23 +16,44 @@ public class CharacterAnimationController : MonoBehaviour
     private bool isPrefabInstantiated = false;
     private bool canClick = true;
 
-    void Update()
+    void Start()
     {
-        GameObject meshObject = GameObject.FindWithTag(modelTag);
+        StartCoroutine(CheckForInstantiatedPrefab());
+    }
 
-        if (meshObject != null && !isPrefabInstantiated)
+    IEnumerator CheckForInstantiatedPrefab()
+    {
+        while (!isPrefabInstantiated)
         {
-            characterAnimator = meshObject.GetComponentInParent<Animator>();
+            GameObject meshObject = GameObject.FindWithTag(modelTag);
 
-            if (characterAnimator != null && actionButton.gameObject.activeInHierarchy)
+            if (meshObject != null)
             {
-                actionButton.onClick.AddListener(PlayAction);
-                isPrefabInstantiated = true;
+                characterAnimator = meshObject.GetComponentInParent<Animator>();
+
+                if (characterAnimator != null && actionButton.gameObject.activeInHierarchy)
+                {
+                    AudioSource[] audioSources = meshObject.GetComponentsInChildren<AudioSource>();
+
+                    if (audioSources.Length >= 3)
+                    {
+                        animationAudioSource = audioSources[2];
+
+                        actionButton.onClick.AddListener(PlayAction);
+                        isPrefabInstantiated = true;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Weniger als 3 AudioSources im instanzierten Prefab gefunden.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Animator oder Action Button konnte nicht gefunden werden.");
+                }
             }
-            else
-            {
-                Debug.LogWarning("Animator oder Action Button konnte nicht gefunden werden.");
-            }
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
@@ -45,6 +66,7 @@ public class CharacterAnimationController : MonoBehaviour
         if (characterAnimator != null)
         {
             characterAnimator.SetTrigger("DoAction");
+
             if (animationAudioSource != null)
             {
                 animationAudioSource.Play();
