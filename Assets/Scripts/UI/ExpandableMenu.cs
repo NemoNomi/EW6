@@ -14,7 +14,7 @@ public class ExpandableMenu : MonoBehaviour
     void Start()
     {
         closedPosition = menuPanel.anchoredPosition;
-        openPosition = new Vector2(closedPosition.x, closedPosition.y + menuPanel.rect.height);
+        openPosition = new Vector2(closedPosition.x, closedPosition.y + (menuPanel.rect.height * 0.65f));
 
         toggleButton.onClick.AddListener(ToggleMenu);
     }
