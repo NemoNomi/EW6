@@ -28,7 +28,7 @@ public class InfoSoundController : MonoBehaviour
                 {
                     audioSource = audioSources[1];
 
-                    playSoundButton.onClick.AddListener(PlaySpatialAudio);
+                    playSoundButton.onClick.AddListener(ToggleSpatialAudio);
                     isPrefabInstantiated = true;
                 }
                 else
@@ -41,11 +41,18 @@ public class InfoSoundController : MonoBehaviour
         }
     }
 
-    void PlaySpatialAudio()
+    void ToggleSpatialAudio()
     {
         if (audioSource != null)
         {
-            audioSource.Play(); 
+            if (audioSource.isPlaying)
+            {
+                audioSource.Pause();
+            }
+            else
+            {
+                audioSource.Play();
+            }
         }
         else
         {
