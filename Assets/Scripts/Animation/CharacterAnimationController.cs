@@ -6,7 +6,7 @@ public class CharacterAnimationController : MonoBehaviour
 {
     public string modelTag = "modelObject";  
     public Button actionButton;
-    private AudioSource animationAudioSource;  // Die AudioSource auf dem Prefab für den Animationssound
+    private AudioSource animationAudioSource;
     public float soundDelay = 0.5f;
     public float clickCooldown = 1f;
 
@@ -27,16 +27,13 @@ public class CharacterAnimationController : MonoBehaviour
 
             if (meshObject != null)
             {
-                // Finde den Animator
                 characterAnimator = meshObject.GetComponentInParent<Animator>();
 
-                // Finde die AudioSource auf dem Prefab
                 AudioSource[] audioSources = meshObject.GetComponentsInChildren<AudioSource>();
                 if (audioSources.Length >= 3)
                 {
-                    animationAudioSource = audioSources[2];  // Die dritte AudioSource in der Hierarchie
+                    animationAudioSource = audioSources[2]; 
 
-                    // Füge den Button-Listener hinzu
                     if (actionButton.gameObject.activeInHierarchy)
                     {
                         actionButton.onClick.AddListener(PlayAction);
@@ -61,10 +58,8 @@ public class CharacterAnimationController : MonoBehaviour
 
         if (characterAnimator != null)
         {
-            // Triggere die Animation
             characterAnimator.SetTrigger("DoAction");
 
-            // Starte den Sound mit Verzögerung
             if (animationAudioSource != null)
             {
                 StartCoroutine(PlayAnimationSoundWithDelay(soundDelay));
@@ -81,7 +76,7 @@ public class CharacterAnimationController : MonoBehaviour
     IEnumerator PlayAnimationSoundWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        animationAudioSource.Play();  // Spiele den Animationssound ab
+        animationAudioSource.Play(); 
     }
 
     IEnumerator ResetClickCooldown()
