@@ -2502,9 +2502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelTag: modelObject
   actionButton: {fileID: 303532868}
-  actionAudioSource: {fileID: 1551079218}
-  actionSound: {fileID: 8300000, guid: a7ce0f80c1e794740a3ced8619e065d0, type: 3}
-  soundDelay: 2
+  soundDelay: 0.5
   clickCooldown: 2
 --- !u!1 &1029731923
 GameObject:
@@ -3305,12 +3303,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435516220}
   m_CullTransparentMesh: 1
---- !u!82 &1551079218 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 3146495952783166707, guid: 9fedecbd1aa68924b816f15cb97e611a,
-    type: 3}
-  m_PrefabInstance: {fileID: 208546340}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1559914062
 GameObject:
   m_ObjectHideFlags: 0
@@ -4261,7 +4253,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 98144de3f7bb0644caf8bbd01a1163ca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3cc7ff4fe0261194da5009fa9f56ecd9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

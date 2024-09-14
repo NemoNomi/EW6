@@ -6,9 +6,7 @@ public class CharacterAnimationController : MonoBehaviour
 {
     public string modelTag = "modelObject";  
     public Button actionButton;
-    public AudioSource actionAudioSource;
-    public AudioClip actionSound;
-    private AudioSource animationAudioSource;
+    private AudioSource animationAudioSource;  // Die AudioSource auf dem Prefab für den Animationssound
     public float soundDelay = 0.5f;
     public float clickCooldown = 1f;
 
@@ -29,27 +27,25 @@ public class CharacterAnimationController : MonoBehaviour
 
             if (meshObject != null)
             {
+                // Finde den Animator
                 characterAnimator = meshObject.GetComponentInParent<Animator>();
 
-                if (characterAnimator != null && actionButton.gameObject.activeInHierarchy)
+                // Finde die AudioSource auf dem Prefab
+                AudioSource[] audioSources = meshObject.GetComponentsInChildren<AudioSource>();
+                if (audioSources.Length >= 3)
                 {
-                    AudioSource[] audioSources = meshObject.GetComponentsInChildren<AudioSource>();
+                    animationAudioSource = audioSources[2];  // Die dritte AudioSource in der Hierarchie
 
-                    if (audioSources.Length >= 3)
+                    // Füge den Button-Listener hinzu
+                    if (actionButton.gameObject.activeInHierarchy)
                     {
-                        animationAudioSource = audioSources[2];
-
                         actionButton.onClick.AddListener(PlayAction);
                         isPrefabInstantiated = true;
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Weniger als 3 AudioSources im instanzierten Prefab gefunden.");
                     }
                 }
                 else
                 {
-                    Debug.LogWarning("Animator oder Action Button konnte nicht gefunden werden.");
+                    Debug.LogWarning("Nicht genügend AudioSources auf dem Prefab gefunden.");
                 }
             }
 
@@ -65,30 +61,27 @@ public class CharacterAnimationController : MonoBehaviour
 
         if (characterAnimator != null)
         {
+            // Triggere die Animation
             characterAnimator.SetTrigger("DoAction");
 
+            // Starte den Sound mit Verzögerung
             if (animationAudioSource != null)
             {
-                animationAudioSource.Play();
+                StartCoroutine(PlayAnimationSoundWithDelay(soundDelay));
             }
         }
         else
         {
-            Debug.LogWarning("Animator nicht gefunden oder nicht zugewiesen.");
-        }
-
-        if (actionAudioSource != null && actionSound != null)
-        {
-            StartCoroutine(PlayActionSoundWithDelay(soundDelay));
+            Debug.LogWarning("Animator nicht gefunden.");
         }
 
         StartCoroutine(ResetClickCooldown());
     }
 
-    IEnumerator PlayActionSoundWithDelay(float delay)
+    IEnumerator PlayAnimationSoundWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        actionAudioSource.PlayOneShot(actionSound);
+        animationAudioSource.Play();  // Spiele den Animationssound ab
     }
 
     IEnumerator ResetClickCooldown()
